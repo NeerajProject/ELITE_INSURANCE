@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_commission_payable,res_commission_payable,elite_custom_template.model_res_commission_payable,,1,1,1,1
+access_res_commission_payable_line,res_commission_payable_line,elite_custom_template.model_res_commission_payable_line,,1,1,1,1
+

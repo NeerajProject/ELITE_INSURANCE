@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_commission_payable_form_view" model="ir.ui.view">
+            <field name="name">elite_custom_template.res_commission_payable.form</field>
+            <field name="model">res.commission.payable</field>
+            <field name="arch" type="xml">
+                <form string="ModelTitle">
+                    <header>
+                        <button string="Print" class="btn btn-outline-primary o_form_button_create"/>
+                        <button string="Export" class="btn btn-outline-primary o_form_button_create"/>
+                        <button string="Generate RV" class="btn btn-outline-primary o_form_button_create"/>
+
+                    </header>
+
+
+                    <sheet>
+                        <!--                        <field name="name"></field>-->
+                        <group>
+                            <group>
+                                <field name="branch_id"></field>
+                                <field name="premium_paid_amounts"></field>
+                                <field name="date_from_date"></field>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="insurance_company"></field>
+                                    <field name="policy_status"></field>
+                                    <field name="date_to_date"></field>
+
+                                </group>
+
+
+                                <group>
+
+                                    <field name="partner_id"></field>
+                                    <field name="producers_name"></field>
+                                    <field name="policy_type"></field>
+
+                                </group>
+                                <group>
+                                    <button string="Filter" class="btn btn-outline-primary o_form_button_create"/>
+
+                                </group>
+
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Premiums Payments" name="premiums_payments">
+                            <field name="commission_payable_line_ids">
+                                <tree>
+                                    <field name="insurer_partner_id"></field>
+                                    <field name="odoo_policy"></field>
+                                    <field name="policy_no"></field>
+                                    <field name="schedule_no"></field>
+                                    <field name="type_of_policy"></field>
+                                    <field name="customer_name_id"></field>
+                                    <field name="type_of_business"></field>
+                                    <field name="producers_name"></field>
+                                    <field name="producers_commissions_rate"></field>
+                                    <field name="due_date"></field>
+                                    <field name="rate_of_commissions"></field>
+                                    <field name="total_premiums"></field>
+                                    <field name="paid_amount"></field>
+                                    <field name="outstanding_payment"></field>
+                                    <field name="status"></field>
+                                    <field name="premium_paid_before"></field>
+                                </tree>
+                            </field>
+
+                            </page>
+                        </notebook>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_commission_payable_tree_view" model="ir.ui.view">
+            <field name="name">elite_custom_template.res_commission_payable.tree</field>
+            <field name="model">res.commission.payable</field>
+            <field name="arch" type="xml">
+                <tree string="ModelTitle">
+                               <field name="branch_id"></field>
+                    <field name="premium_paid_amounts"></field>
+                                            <field name="date_from_date"></field>
+                                            <field name="date_to_date"></field>
+                                            <field name="insurance_company"></field>
+                                            <field name="policy_status"></field>
+                                            <field name="partner_id"></field>
+                                            <field name="producers_name"></field>
+                                            <field name="policy_type"></field>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="res_commission_payable_act_window" model="ir.actions.act_window">
+            <field name="name">Commission Payable</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.commission.payable</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Commission Payable" id="res_commission_payable_menu"
+                  action="res_commission_payable_act_window"/>
+
+    </data>
+</odoo>

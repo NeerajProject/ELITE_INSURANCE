@@ -1,0 +1,8 @@
+div.o_row_slip {
+   display: flex;
+   align-items: center;
+   margin-bottom: 15px;
+}
+.slip_input{
+    width:50px;
+}
