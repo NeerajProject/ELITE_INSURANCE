@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_task_form2_inherited">
+            <field name="name">project.task.form.inherited</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2" />
+            <field name="arch" type="xml">
+<div name="button_box" position="inside">
+
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    string="Premium Transactions"
+                    name="action_premium_transaction"
+                    icon="fa-dollar"></button>
+
+
+</div>
+                <xpath expr="//group/group/field[@name='amount']" position="after">
+                    <field name="premium_transaction_amt" invisible="1"></field>
+                    <field name="premium_paid_amount" readonly="1"></field>
+<!--                    <field name="premium_trasaction_ids"></field>-->
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

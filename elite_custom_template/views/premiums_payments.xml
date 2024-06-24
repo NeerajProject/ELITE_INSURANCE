@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+
+        <record id="premiums_payments_form_view" model="ir.ui.view">
+            <field name="name">premiums_payments_form</field>
+            <field name="model">premiums.payments</field>
+            <field name="arch" type="xml">
+                <form string="Premiums Payments">
+                    <header>
+                        <button name="action_post" invisible="status != 'draft'" type="object" string="Post" state="draft"></button>
+                        <button name="action_cancel" invisible="status != 'post'" type="object"  state="post" string="Redraft"></button>
+                    <field name="status" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                         <div class="oe_title">
+                        <h1 class="d-flex">
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+<!--                         filters are here-->
+                           <group col="3" class="mb16">
+                            <group>
+                                <field name="branch_id"  readonly="status != 'draft'"></field>
+                                <field name="premium_paid_amounts"  readonly="status != 'draft'"></field>
+                                <field name="date_from"  readonly="status != 'draft'"></field>
+
+                            </group>
+                            <group>
+                                <field name="insurance_company"  readonly="status != 'draft'"></field>
+                                <field name="policy_status"  readonly="status != 'draft'"></field>
+                                <field name="date_to"  readonly="status != 'draft'"></field>
+                            </group>
+                            <group>
+                                <field name="partner_id"  readonly="status != 'draft'"></field>
+                                <field name="user_id"  readonly="status != 'draft'"></field>
+                                <field name="policy_type"  readonly="status != 'draft'"></field>
+                                <button name="action_filters" type="object" string="Filters"  invisible="status != 'draft'"></button>
+                            </group>
+                        </group>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <notebook>
+                            <page name="premium_payments" string="Premium Payments">
+                                <field name="premiums_payments_line_ids">
+                                    <tree create="0" edit="1" editable="top" delete="0">
+                                        <field name="task_id"></field>
+                                        <field name="insurer_partner_id"  readonly="1"></field>
+                                    <field name="odoo_policy" readonly="1"></field>
+                                    <field name="policy_no" readonly="1"></field>
+                                    <field name="schedule_no" readonly="1"></field>
+                                    <field name="type_of_policy" readonly="1"></field>
+                                    <field name="customer_name_id" readonly="1"></field>
+                                    <field name="type_of_business" readonly="1"></field>
+                                    <field name="producers_name" readonly="1"></field>
+                                    <field name="producers_commissions_rate" readonly="1"></field>
+                                    <field name="due_date" readonly="1"></field>
+                                    <field name="rate_of_commissions" readonly="1"></field>
+                                    <field name="total_premiums" readonly="1"></field>
+                                    <field name="paid_amount" readonly="1"></field>
+                                    <field name="outstanding_payment" readonly="1"></field>
+                                        <field name="payment_allocation" readonly="status != 'draft'" ></field>
+                                    <field name="status" readonly="1"></field>
+
+                                    </tree>
+                                </field>
+
+   <div class="row">
+           <div class="col-9" ></div>
+    <div class="col-3"  style="font-size:22px">
+                Total :
+
+                                        <field name="total_amount"  widget="monetary"></field>
+
+
+    </div>
+   </div>
+
+                            </page>
+                        </notebook>
+
+                    </sheet>
+
+                    <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="premiums_payments_tree_view" model="ir.ui.view">
+            <field name="name">premiums_payments_tree</field>
+            <field name="model">premiums.payments</field>
+            <field name="arch" type="xml">
+                <tree string="Premiums Payments">
+                <field name="name"></field>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="premiums_payments_act_window" model="ir.actions.act_window">
+            <field name="name">Premiums Payments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">premiums.payments</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Premiums Payments.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Premiums Payments" id="premiums_payments_menu"  action="premiums_payments_act_window"/>
+
+    </data>
+</odoo>

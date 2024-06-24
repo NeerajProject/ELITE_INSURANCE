@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_premiums_payments_line,premiums.payments.line,model_premiums_payments_line,,1,1,1,1
+access_premiums_payments,premiums.payments,model_premiums_payments,,1,1,1,1
+access_brokerage_calculation,brokerage_calculation,model_brokerage_calculation,,1,1,1,1
+access_brokerage_calculation_line,brokerage_calculation_line,model_brokerage_calculation_line,,1,1,1,1

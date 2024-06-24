@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="premiums_payments_line_form_view" model="ir.ui.view">
+            <field name="name">elite_custom_template.premiums_payments_line.form</field>
+            <field name="model">premiums.payments.line</field>
+            <field name="arch" type="xml">
+                <form string="ModelTitle">
+                    <header>
+                                    <field name="status" readonly="1"></field>
+
+                    </header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                  <field name="insurer_partner_id"  readonly="1"></field>
+                                    <field name="odoo_policy" readonly="1"></field>
+                                    <field name="policy_no" readonly="1"></field>
+                                    <field name="schedule_no" readonly="1"></field>
+                                    <field name="type_of_policy" readonly="1"></field>
+                            </group>
+                            <group>
+                                <field name="customer_name_id" readonly="1"></field>
+                                    <field name="type_of_business" readonly="1"></field>
+                                    <field name="producers_name" readonly="1"></field>
+                                    <field name="producers_commissions_rate" readonly="1"></field>
+                            </group>
+                            <group>
+                                  <field name="due_date" readonly="1"></field>
+                                    <field name="rate_of_commissions" readonly="1"></field>
+                                    <field name="total_premiums" readonly="1"></field>
+                                    <field name="paid_amount" readonly="1"></field>
+                                    <field name="outstanding_payment" readonly="1"></field>
+<!--                                     <field name="premium_transaction_amt" invisible="1"></field>-->
+                                    <field name="payment_allocation" readonly="1" ></field>
+
+                            </group>
+                        </group>
+
+
+
+
+                    </sheet>
+
+
+                        <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="premiums_payments_line_tree_view" model="ir.ui.view">
+            <field name="name">elite_custom_template.premiums_payments_line.tree</field>
+            <field name="model">premiums.payments.line</field>
+            <field name="arch" type="xml">
+                <tree string="ModelTitle">
+                                    <field name="insurer_partner_id"  readonly="1"></field>
+                                    <field name="odoo_policy" readonly="1"></field>
+                                    <field name="policy_no" readonly="1"></field>
+                                    <field name="schedule_no" readonly="1"></field>
+                                    <field name="type_of_policy" readonly="1"></field>
+                                    <field name="premium_transaction_amt" readonly="1"></field>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="premiums_payments_line_act_window" model="ir.actions.act_window">
+            <field name="name">Premium Transaction</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">premiums.payments.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
