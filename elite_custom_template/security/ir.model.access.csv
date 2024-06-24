@@ -3,3 +3,5 @@ access_premiums_payments_line,premiums.payments.line,model_premiums_payments_lin
 access_premiums_payments,premiums.payments,model_premiums_payments,,1,1,1,1
 access_brokerage_calculation,brokerage_calculation,model_brokerage_calculation,,1,1,1,1
 access_brokerage_calculation_line,brokerage_calculation_line,model_brokerage_calculation_line,,1,1,1,1
+access_commission_payable,commission_payable,model_commission_payable,,1,1,1,1
+access_commission_payable_line,commission_payable_line,model_commission_payable_line,,1,1,1,1
