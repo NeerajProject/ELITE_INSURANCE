@@ -5,3 +5,5 @@ access_brokerage_calculation,brokerage_calculation,model_brokerage_calculation,,
 access_brokerage_calculation_line,brokerage_calculation_line,model_brokerage_calculation_line,,1,1,1,1
 access_commission_payable,commission_payable,model_commission_payable,,1,1,1,1
 access_commission_payable_line,commission_payable_line,model_commission_payable_line,,1,1,1,1
+access_brokerage_collection,brokerage_collection,model_brokerage_collection,,1,1,1,1
+access_brokerage_collection_line,brokerage_collection_line,model_brokerage_collection_line,,1,1,1,1

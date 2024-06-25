@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="brokerage_collection_form_view" model="ir.ui.view">
+            <field name="name">elite.custom.template.brokerage.collection.form</field>
+            <field name="model">brokerage.collection</field>
+            <field name="arch" type="xml">
+                <form string="Brokerage Collection">
+                    <header>
+                        <div name="button_box" position="inside">
+                            <button class="oe_stat_button"
+                                    type="object"
+                                    icon="fa-file"
+                                    string="Invoice"
+                                    name="action_get_invoice">
+                            </button>
+                        </div>
+                        <!--                        <button type="object" string="Post" name="action_post"  invisible="status != 'draft'">-->
+                        <button type="object" string="Post" name="action_post">
+
+                        </button>
+                        <field name="status" widget="statusbar"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1 class="d-flex">
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <field name="status"></field>
+                        <group col="3" class="mb16">
+                            <group>
+                                <field name="branch_id" readonly="status != 'draft'"></field>
+                                <!--                                <field name="premium_paid_amounts"  readonly="status != 'draft'"></field>-->
+                                <field name="collection_amount" readonly="status != 'draft'"></field>
+                                <field name="date_from" readonly="status != 'draft'"></field>
+
+                            </group>
+                            <group>
+                                <field name="insurance_company" readonly="status != 'draft'"></field>
+
+                                    <field name="payment_id" readonly="status != 'draft'" />
+                                    <field name="amount" force_save="1" readonly="status != 'draft'" />
+<!--                                    <field name="amount" style="width:10%" force_save="1"/>-->
+
+
+
+
+
+                                <field name="date_to" readonly="status != 'draft'"></field>
+                            </group>
+                            <group>
+                                <field name="partner_id" readonly="status != 'draft'"></field>
+                                <field name="invoice_no" readonly="status != 'draft'"></field>
+                                <field name="policy_type" readonly="status != 'draft'"></field>
+                                <button name="action_filters" type="object" string="Filters"
+                                        invisible="status != 'draft'"></button>
+                            </group>
+                        </group>
+
+
+                        <notebook>
+                            <page name="commision_collection" string="Commissions Collection">
+                                <field name="brokerage_collection_line_ids">
+
+                                    <tree create="0" edit="1" editable="top" delete="0">
+
+                                        <field name="insurer_partner_id" readonly="1"></field>
+                                        <field name="policy_no" readonly="1"></field>
+                                        <field name="schedule_no" readonly="1"></field>
+                                        <field name="type_of_policy" readonly="1"></field>
+                                        <field name="customer_name_id" readonly="1"></field>
+
+                                        <field name="invoice_id" readonly="1"></field>
+                                        <field name="invoice_date" force_save="1" readonly="1"></field>
+
+
+                                         <field name="total_premium_payments" readonly="1"></field>
+                                        <field name="rate_of_commissions" readonly="1"></field>
+                                        <field name="commission_invoice_including_vat" readonly="1"></field>
+                                        <field name="received_commissions" readonly="1"></field>
+                                        <field name="outstanding_commisions" readonly="1"></field>
+                                        <field name="commissions_allocation" readonly="1"></field>
+                                        <field name="select" ></field>
+
+
+                                    </tree>
+                                </field>
+
+<!--                                <div class="row">-->
+<!--                                    <div class="col-9"></div>-->
+<!--                                    <div class="col-3" style="font-size:22px">-->
+<!--                                        Total :-->
+
+<!--                                        <field name="total_amount" widget="monetary"></field>-->
+
+
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="brokerage_collection_tree_view" model="ir.ui.view">
+            <field name="name">elite_custom_template.brokerage_collection.tree</field>
+            <field name="model">brokerage.collection</field>
+            <field name="arch" type="xml">
+                <tree string="Brokerage Collection">
+                    <field name="name"></field>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="brokerage_collection_new_act_window" model="ir.actions.act_window">
+            <field name="name">Brokerage Collection</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">brokerage.collection</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create New Records
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Brokerage Collection" id="brokerage_collection_menu_new" sequence="3"
+                  action="brokerage_collection_new_act_window"/>
+
+    </data>
+</odoo>
