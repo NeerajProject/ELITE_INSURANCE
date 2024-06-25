@@ -43,17 +43,27 @@
                                 <field name="commission_payable_line">
                                     <tree create="0" edit="1" editable="top" delete="0">
 <!--                                        <field name="project_id"></field>-->
-                                        <field name="insurance_company_id"></field>
+                                        <field name="insurance_company_id" readonly="1"></field>
 <!--                                        <field name="task_id"></field>-->
-<field name="policy_sequence"></field>
-<field name="schedule_no"></field>
-<field name="type_of_policy"></field>
-<field name="customer_name_id"></field>
-<field name="customer_name_id"></field>
-<field name="producer_name_id"></field>
-<field name="total_premium"></field>
-<field name="total_premium_paid"></field>
-<field name="total_premium_outstanding"></field>
+<field name="policy_sequence"  readonly="1"></field>
+<field name="schedule_no" readonly="1"></field>
+<field name="type_of_policy" readonly="1"></field>
+<field name="customer_name_id" readonly="1"></field>
+<field name="customer_name_id" readonly="1"></field>
+<field name="producer_name_id" readonly="1"></field>
+<field name="total_premium" readonly="1"></field>
+<field name="total_premium_paid" readonly="1"></field>
+<field name="total_premium_outstanding" readonly="1"></field>
+<field name="elite_commission" readonly="1"></field>
+<field name="elite_commission_amount" readonly="1"></field>
+<field name="elite_commission_received" readonly="1"></field>
+<field name="commission_outstanding" readonly="1"></field>
+<field name="producer_commission_rate" readonly="1"></field>
+<field name="producer_commission" readonly="1"></field>
+<field name="producer_commission_paid" readonly="1"></field>
+<field name="outstanding_producer_commission" readonly="1"></field>
+<field name="select"></field>
+
                                     </tree>
                                 </field>
                             </page>

@@ -87,6 +87,8 @@ class BrokerageCalculationLine(models.Model):
             rec.outstanding_payment =  rec.total_premium_including_vat -  rec.paid_including_vat
             rec.commissions_eligible_excluding_vat = (rec.paid_including_vat/1.15)*rec.rate_of_commissions
             rec.commission_outstanding_for_invoice = rec.commissions_eligible_excluding_vat - rec.commission_to_clamed
+
+
     @api.model
     def create(self, vals):
         res = super(BrokerageCalculationLine, self).create(vals)

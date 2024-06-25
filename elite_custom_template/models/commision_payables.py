@@ -17,6 +17,16 @@ class CommissionPayablesLine(models.Model):
     total_premium = fields.Float(string="Total Premium")
     total_premium_paid = fields.Float(string="Paid")
     total_premium_outstanding = fields.Float(string="O/S")
+    elite_commission = fields.Float(string="Elite Commissions Rate (%)")
+    elite_commission_amount = fields.Float(string="Elite Commissions  (SAR)")
+    elite_commission_received = fields.Float(string="Received Commissions")
+    commission_outstanding = fields.Float(string="Commissions - O/S")
+    producer_commission_rate = fields.Float(string="Producers Commissions Rate")
+    producer_commission = fields.Float(string="Producer Commission")
+    producer_commission_paid = fields.Float(string="Paid")
+    outstanding_producer_commission = fields.Float(string="O/S")
+    select = fields.Boolean(string="Select")
+    status = fields.Selection([('draft','Draft'),('post','Post')],default="draft")
 
     def _compute_premium_payments_line(self):
         for rec in self:
@@ -30,6 +40,14 @@ class CommissionPayablesLine(models.Model):
             rec.total_premium = rec.task_id.amount
             rec.total_premium_paid= rec.task_id.premium_paid_amount
             rec.total_premium_outstanding = rec.total_premium - rec.total_premium_paid
+            rec.elite_commission = rec.project_id.brokerage_fee_per
+            rec.elite_commission_amount = (rec.project_id.brokerage_fee_per*rec.total_premium)/100
+            rec.elite_commission_received = rec.elite_commission_amount #from brokerage collection
+            rec.commission_outstanding = rec.elite_commission_amount - rec.elite_commission_received
+            rec.producer_commission_rate = rec.project_id.salesperson_commission_per
+            rec.producer_commission = (rec.producer_commission_rate*rec.elite_commission_amount)/100
+            rec.outstanding_producer_commission = rec.producer_commission - rec.producer_commission_paid
+
 
 
 
@@ -59,7 +77,6 @@ class CommisionPayables(models.Model):
 
     def action_filters(self):
         # domain = [('task_type', '=', 'offerings')]
-        print(">>>>>>>> self.producers_name", self.user_id)
 
         domain = [('task_type', '=', 'premium_schedules'), ('parent_id', '!=', False)]
         print(domain)
@@ -77,7 +94,6 @@ class CommisionPayables(models.Model):
             domain.append(('partner_id', '=', self.partner_id.id))
         if self.user_id:
             domain.append(('salesperson_user_id', '=', self.user_id.id))
-        print(domain)
 
         values = self.env['project.task'].search(domain)
         print(values)
