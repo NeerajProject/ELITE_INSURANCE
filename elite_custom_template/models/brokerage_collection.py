@@ -138,9 +138,12 @@ class BrokerageCollection(models.Model):
         print("task",values)
         data=[]
         for rec in values:
-            data.append((0, 0, {
-                'task_id': rec.id
-            }))
+            for task_multiple in  rec.get_invoice_brokers():
+                print(task_multiple)
+                data.append((0, 0, {
+                    'task_id':    task_multiple.task_brokerage_id.id,
+                    'invoice_id': task_multiple.move_id.id
+                }))
         for rec in self.brokerage_collection_line_ids:
             rec.unlink()
             # self.premiums_payments_line_ids = [(5)]
@@ -236,23 +239,15 @@ class BrokerageCollectionLine(models.Model):
 #         else:
 #             self.commissions_to_invoice = 0
     def _compute_brokerage_collection_line(self):
+
         for rec in self:
-            rec.project_id = rec.task_id.project_id
-            rec.insurer_partner_id = rec.project_id.insurer_partner_id
-            # rec.odoo_policy = rec.project_id.sequence
-            rec.policy_no = rec.project_id.policy_sequence
-            rec.schedule_no = rec.project_id.no_of_premium_schedule
-            rec.type_of_policy = rec.project_id.policy_type
-            rec.customer_name_id = rec.project_id.partner_id
-            # rec.status_fee_status = rec.task_id.brokerage_fee_status
-            # rec.rate_of_commissions = rec.project_id.brokerage_fee_per
-            # rec.commission_to_clamed = rec.task_id.compute_commission_to_invoice()
-            #
-            # rec.total_premium_including_vat = rec.task_id.premium_vat_amount
-            # rec.paid_including_vat = rec.task_id.premium_paid_amount
-            # rec.outstanding_payment =  rec.total_premium_including_vat -  rec.paid_including_vat
-            # rec.commissions_eligible_excluding_vat = (rec.paid_including_vat/1.15)*rec.rate_of_commissions
-            # rec.commission_outstanding_for_invoice = rec.commissions_eligible_excluding_vat - rec.commission_to_clamed
+                rec.project_id = rec.task_id.project_id
+                rec.insurer_partner_id = rec.project_id.insurer_partner_id
+                rec.policy_no = rec.project_id.policy_sequence
+                rec.schedule_no = rec.project_id.no_of_premium_schedule
+                rec.type_of_policy = rec.project_id.policy_type
+                rec.customer_name_id = rec.project_id.partner_id
+
     @api.model
     def create(self, vals):
         res = super(BrokerageCollectionLine, self).create(vals)

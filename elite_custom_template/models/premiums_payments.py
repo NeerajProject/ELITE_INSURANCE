@@ -26,6 +26,8 @@ class  ProjectTask(models.Model):
     commission_to_clamed = fields.Float(string="Commission Claimed" , compute="compute_commission_to_invoice")
 
 
+    def get_invoice_brokers(self):
+        return  self.env['account.move.line'].search([('task_brokerage_id','=',self.id)])
 
 
     @api.depends('brokers_calculation_line_ids')

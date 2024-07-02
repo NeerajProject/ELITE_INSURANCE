@@ -4,10 +4,10 @@ from odoo.exceptions import ValidationError
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
     brokerage_calculation_line_id = fields.Many2one('brokerage.calculation.line')
+    task_brokerage_id = fields.Many2one('project.task')
 class AccountMove(models.Model):
     _inherit = 'account.move'
     brokerage_calculation_id = fields.Many2one('brokerage.calculation')
-
     def action_invoice_register_payment(self):
         Payment = self.env['account.payment'].with_context(default_invoice_ids=[(4, self.id, False)])
         payment = Payment.create({
@@ -150,6 +150,7 @@ class BrokerageCalculation(models.Model):
         project_id ={}
         partner_id = {}
         project_id_credit_note ={}
+        task_ids = {}
         for rec in self.brokerage_calculation_line_ids.filtered(lambda p: p.select):
             project_id[rec.project_id.id] =[]
             project_id_credit_note[rec.project_id.id] =[]
@@ -160,7 +161,8 @@ class BrokerageCalculation(models.Model):
                 'quantity': 1,
                 'price_unit': rec.commission_invoice_including_vat,
                 'tax_ids': [self.env.ref('elite_custom_template.account_brokers_tax').id],
-                'brokerage_calculation_line_id':rec.id
+                'brokerage_calculation_line_id':rec.id,
+                'task_brokerage_id': rec.task_id.id
             }))
             project_id_credit_note[rec.project_id.id].append((0, 0, {
                 'name': f'{rec.insurer_partner_id.name}|{rec.policy_no}|{rec.schedule_no}',
@@ -175,7 +177,8 @@ class BrokerageCalculation(models.Model):
                 'move_type': 'out_invoice',
                 'brokerage_calculation_id': self.id,
                 'partner_id': partner_id[rec],
-                'invoice_line_ids':project_id[rec]
+                'invoice_line_ids':project_id[rec],
+
                                                 })
             account_move_id.action_post()
             account_move_credit_note_id= self.env['account.move'].create({
