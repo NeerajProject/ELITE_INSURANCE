@@ -13,6 +13,7 @@ class BrokerageCollection(models.Model):
     branch_id = fields.Many2one('crm.team', string="Branch")
     collection_amount = fields.Float(string='Collection Amount')
     date_from = fields.Date(string="From")
+    invoice_line_id = fields.Many2one('account.move.line')
 
 
 
@@ -142,7 +143,8 @@ class BrokerageCollection(models.Model):
                 print(task_multiple)
                 data.append((0, 0, {
                     'task_id':    task_multiple.task_brokerage_id.id,
-                    'invoice_id': task_multiple.move_id.id
+                    'invoice_id': task_multiple.move_id.id,
+                    'invoice_line_id' :task_multiple.id
                 }))
         for rec in self.brokerage_collection_line_ids:
             rec.unlink()
@@ -203,11 +205,12 @@ class BrokerageCollectionLine(models.Model):
     total_premium_payments = fields.Float(string="Total Premium Payments")
     rate_of_commissions = fields.Float(string="Commission Rate (%) ")
     commission_invoice_including_vat = fields.Float(string="Commissions Invoiced including vat ")
+    invoice_line_id = fields.Many2one('account.move.line')
 
 #     # type_of_business Customer Type FROM LEAD
 #
     received_commissions = fields.Float(string="Received  Commissions")
-    outstanding_commisions = fields.Float(string="Commissions - O/S")
+    outstanding_commissions = fields.Float(string="Commissions - O/S")
     commissions_allocation = fields.Float('Commissions allocation')
 #     status_fee_status = fields.Selection([
 #         ('not_invoiced', 'Not Invoiced'),
@@ -247,6 +250,11 @@ class BrokerageCollectionLine(models.Model):
                 rec.schedule_no = rec.project_id.no_of_premium_schedule
                 rec.type_of_policy = rec.project_id.policy_type
                 rec.customer_name_id = rec.project_id.partner_id
+                rec.total_premium_payments = rec.task_id.premium_paid_amount
+                rec.rate_of_commissions = rec.project_id.brokerage_fee_per
+                rec.commission_invoice_including_vat = rec.invoice_line_id.price_total
+                rec.received_commissions = rec.task_id.compute_commission_recieved()
+                rec.outstanding_commissions =  rec.commission_invoice_including_vat - rec.received_commissions
 
     @api.model
     def create(self, vals):

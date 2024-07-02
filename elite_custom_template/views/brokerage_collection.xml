@@ -81,8 +81,8 @@
                                         <field name="rate_of_commissions" readonly="1"></field>
                                         <field name="commission_invoice_including_vat" readonly="1"></field>
                                         <field name="received_commissions" readonly="1"></field>
-                                        <field name="outstanding_commisions" readonly="1"></field>
-                                        <field name="commissions_allocation" readonly="1"></field>
+                                        <field name="outstanding_commissions" readonly="1"></field>
+                                        <field name="commissions_allocation" ></field>
                                         <field name="select" ></field>
 
 

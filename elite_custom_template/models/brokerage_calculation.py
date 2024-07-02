@@ -5,6 +5,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move.line'
     brokerage_calculation_line_id = fields.Many2one('brokerage.calculation.line')
     task_brokerage_id = fields.Many2one('project.task')
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
     brokerage_calculation_id = fields.Many2one('brokerage.calculation')

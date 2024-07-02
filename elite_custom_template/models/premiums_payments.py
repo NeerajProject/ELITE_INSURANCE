@@ -24,7 +24,18 @@ class  ProjectTask(models.Model):
                                              )
     brokers_calculation_line_ids = fields.One2many('brokerage.calculation.line','task_id')
     commission_to_clamed = fields.Float(string="Commission Claimed" , compute="compute_commission_to_invoice")
+    commission_received = fields.Float(string="Commission Received",compute="compute_commission_recieved")
+    brokerage_collection_lines = fields.One2many('brokerage.collection.line','task_id')
 
+
+    @api.depends('brokerage_collection_lines')
+    def compute_commission_recieved(self):
+        for rec in self:
+            total = 0
+            for record in rec.brokerage_collection_lines.filtered(lambda l: l.select and l.status == 'post'):
+                total = total + record.commissions_allocation
+            self.amount = total
+            return total
 
     def get_invoice_brokers(self):
         return  self.env['account.move.line'].search([('task_brokerage_id','=',self.id)])
