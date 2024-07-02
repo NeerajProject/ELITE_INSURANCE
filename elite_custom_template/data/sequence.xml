@@ -6,7 +6,7 @@
                  <record id="sequence_res_premiums_payments" model="ir.sequence">
         <field name="name">Premium Payable</field>
         <field name="code">res.premiums.payments</field>
-        <field name="prefix">RV/</field>
+        <field name="prefix">RV/%(year)s/%(month)s/</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
@@ -15,7 +15,26 @@
    <record id="sequence_brokerage_calculation" model="ir.sequence">
         <field name="name">Brokerage Calculation</field>
         <field name="code">brokerage.calculation</field>
-        <field name="prefix">BC/</field>
+        <field name="prefix">BC/%(year)s/%(month)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+                 <record id="sequence_brokerage_collection" model="ir.sequence">
+        <field name="name">Brokerage Collection</field>
+        <field name="code">brokerage.collection</field>
+        <field name="prefix">BCL/%(year)s/%(month)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+
+         <record id="sequence_commission_payable" model="ir.sequence">
+        <field name="name">Commission Payable</field>
+        <field name="code">commission.payable</field>
+        <field name="prefix">CP/%(year)s/%(month)s/</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>

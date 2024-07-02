@@ -33,7 +33,8 @@
         'views/premiums_payments_line.xml',
         'views/brokerage_calculation.xml',
         'views/commission_payable.xml',
-        'views/brokerage_collection.xml'
+        'views/brokerage_collection.xml',
+        'data/tax.xml'
 
     ],
     'assets': {

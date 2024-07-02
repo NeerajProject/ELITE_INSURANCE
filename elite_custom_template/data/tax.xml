@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<record id="account_brokers_tax" model="account.tax">
+            <field name="name">Broker Tax Vat 15%</field>
+            <field name="amount">15</field>
+            <field name="amount_type">percent</field>
+        </record>
+    </data>
+</odoo>

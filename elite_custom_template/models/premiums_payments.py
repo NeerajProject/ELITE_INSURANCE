@@ -23,14 +23,18 @@ class  ProjectTask(models.Model):
                                              domain=[('status', '=', 'post'), ('is_selected', '!=', False)]
                                              )
     brokers_calculation_line_ids = fields.One2many('brokerage.calculation.line','task_id')
-    commission_to_clamed = fields.Float()
+    commission_to_clamed = fields.Float(string="Commission Claimed" , compute="compute_commission_to_invoice")
 
+
+
+
+    @api.depends('brokers_calculation_line_ids')
     def compute_commission_to_invoice(self):
         for rec in self:
             total = 0
-            print("compute_commission_to_invoice",rec)
             for record in rec.brokers_calculation_line_ids.filtered(lambda l:l.select and l.status == 'post'):
                 total=total + record.commissions_to_invoice
+            self.amount = total
             return total
 
 
@@ -43,6 +47,7 @@ class  ProjectTask(models.Model):
         return res
 
 
+    @api.depends('premium_trasaction_ids')
     def _compute_premium_transaction_amt(self):
         for rec in self:
             total = 0
@@ -267,5 +272,4 @@ class PremiumsPayments(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'res.premiums.payments') or _('New')
         res = super(PremiumsPayments, self).create(vals)
-        res.update_project_task()
         return res

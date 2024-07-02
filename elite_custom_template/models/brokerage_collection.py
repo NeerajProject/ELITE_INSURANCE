@@ -56,6 +56,7 @@ class BrokerageCollection(models.Model):
     # total_amount = fields.Float(compute="_compute_total_line")
 
 
+
     def action_get_invoice(self):
         print("get invoice")
         # self.ensure_one()

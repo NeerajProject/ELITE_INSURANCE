@@ -30,7 +30,6 @@
                             </h1>
                         </div>
 
-                        <field name="status"></field>
                         <group col="3" class="mb16">
                             <group>
                                 <field name="branch_id" readonly="status != 'draft'"></field>

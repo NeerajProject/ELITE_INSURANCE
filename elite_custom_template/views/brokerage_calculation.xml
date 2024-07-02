@@ -29,7 +29,7 @@
                 </button>
             </div>
 <!--                        <button type="object" string="Post" name="action_post"  invisible="status != 'draft'">-->
-                        <button type="object" string="Post" name="action_post" >
+                        <button type="object" string="Post" name="action_post" invisible="status != 'draft'">
 
                         </button>
                                                 <field name="status" widget="statusbar"/>
@@ -117,6 +117,19 @@
             <field name="arch" type="xml">
                 <tree string="Brokerage Calculation">
                         <field name="name"></field>
+                        <field name="branch_id"  readonly="status != 'draft'"></field>
+
+                          <field name="insurance_company"  readonly="status != 'draft'"></field>
+                        <field name="policy_status"  readonly="status != 'draft'"></field>
+
+                                <field name="partner_id"  readonly="status != 'draft'"></field>
+                                <field name="user_id"  readonly="status != 'draft'"></field>
+                           <field name="date_from"  readonly="status != 'draft'"></field>
+                                                    <field name="date_to"  readonly="status != 'draft'"></field>
+
+                                <field name="policy_type"  readonly="status != 'draft'"></field>
+                    <field name="total_amount"></field>
+                    <field name="status"></field>
                 </tree>
             </field>
         </record>

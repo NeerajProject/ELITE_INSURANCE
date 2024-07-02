@@ -59,9 +59,14 @@ class BrokerageCalculationLine(models.Model):
     paid_including_vat = fields.Float(string="Paid Including Vat")
     commissions_eligible_excluding_vat = fields.Float(string="Commissions Eligible Excluding VAT")
     commission_outstanding_for_invoice = fields.Float(string="Commissions O/s for Invoice")
-    commissions_invoice_vat = fields.Float(string="Commissions Invoice VAT")
+    commissions_invoice_vat = fields.Float(string="Commissions Invoice VAT",compute='compute_commission_invoice_vat')
     commission_invoice_including_vat = fields.Float(string="Commissions Invoice Including Vat")
 
+    @api.depends('commissions_to_invoice')
+    def compute_commission_invoice_vat(self):
+        for rec in self:
+            rec.commissions_invoice_vat = rec.commissions_to_invoice*.15
+            rec.commission_invoice_including_vat = rec.commissions_invoice_vat + rec.commissions_to_invoice
 
     @api.onchange('select')
     def onchange_comissions_to_invoice(self):
@@ -80,13 +85,14 @@ class BrokerageCalculationLine(models.Model):
             rec.customer_name_id = rec.project_id.partner_id
             rec.status_fee_status = rec.task_id.brokerage_fee_status
             rec.rate_of_commissions = rec.project_id.brokerage_fee_per
-            rec.commission_to_clamed = rec.task_id.compute_commission_to_invoice()
 
             rec.total_premium_including_vat = rec.task_id.premium_vat_amount
             rec.paid_including_vat = rec.task_id.premium_paid_amount
             rec.outstanding_payment =  rec.total_premium_including_vat -  rec.paid_including_vat
             rec.commissions_eligible_excluding_vat = (rec.paid_including_vat/1.15)*rec.rate_of_commissions
             rec.commission_outstanding_for_invoice = rec.commissions_eligible_excluding_vat - rec.commission_to_clamed
+            rec.commission_to_clamed = rec.task_id.compute_commission_to_invoice()
+
 
 
     @api.model
@@ -143,28 +149,43 @@ class BrokerageCalculation(models.Model):
         invoices =[]
         project_id ={}
         partner_id = {}
+        project_id_credit_note ={}
         for rec in self.brokerage_calculation_line_ids.filtered(lambda p: p.select):
             project_id[rec.project_id.id] =[]
+            project_id_credit_note[rec.project_id.id] =[]
+
         for rec in self.brokerage_calculation_line_ids.filtered(lambda p: p.select):
             project_id[rec.project_id.id ].append((0, 0, {
                 'name': f'{rec.insurer_partner_id.name}|{rec.policy_no}|{rec.schedule_no}',
                 'quantity': 1,
-                'price_unit': rec.commissions_to_invoice,
-                'tax_ids': False,
+                'price_unit': rec.commission_invoice_including_vat,
+                'tax_ids': [self.env.ref('elite_custom_template.account_brokers_tax').id],
                 'brokerage_calculation_line_id':rec.id
             }))
+            project_id_credit_note[rec.project_id.id].append((0, 0, {
+                'name': f'{rec.insurer_partner_id.name}|{rec.policy_no}|{rec.schedule_no}',
+                'quantity': 1,
+                'price_unit': rec.commissions_to_invoice,
+                'tax_ids': False,
+                'brokerage_calculation_line_id': rec.id
+            }))
             partner_id[rec.project_id.id] = rec.project_id.insurer_partner_id.id
-        print('partner_id',partner_id)
-        print('project_id',project_id)
         for rec in project_id.keys():
             account_move_id=self.env['account.move'].create({
                 'move_type': 'out_invoice',
-                'brokerage_calculation_id':self.id,
+                'brokerage_calculation_id': self.id,
                 'partner_id': partner_id[rec],
                 'invoice_line_ids':project_id[rec]
                                                 })
             account_move_id.action_post()
-            account_move_id.action_invoice_register_payment()
+            account_move_credit_note_id= self.env['account.move'].create({
+                'move_type': 'out_refund',
+                'brokerage_calculation_id': self.id,
+                'partner_id': partner_id[rec],
+
+                'invoice_line_ids': project_id_credit_note[rec]})
+            account_move_credit_note_id.action_post()
+
 
             # return account_move_id.action_invoice_register_payment()
 

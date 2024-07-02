@@ -9,6 +9,7 @@
                 <form string="ModelTitle">
                     <header>
                                             <field name="status" widget="statusbar" readonly="1"/>
+                        
 
                     </header>
                     <sheet>
@@ -18,7 +19,7 @@
                                 <field name="name" placeholder="Title"/>
                             </h1>
                         </div>
-                          <group col="3" class="mb16">
+                          <group col="3" class="mb16" >
                             <group>
                                 <field name="branch_id"  readonly="status != 'draft'"></field>
 <!--                                <field name="premium_paid_amounts"  readonly="status != 'draft'"></field>-->
@@ -80,7 +81,7 @@
             <field name="arch" type="xml">
                 <tree string="ModelTitle">
 
-
+                <field name="name"></field>
 
 
                                  </tree>

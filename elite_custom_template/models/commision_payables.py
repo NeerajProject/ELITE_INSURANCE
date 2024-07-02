@@ -61,7 +61,9 @@ class CommissionPayablesLine(models.Model):
 class CommisionPayables(models.Model):
     _name ='commission.payable'
 
-    name = fields.Char()
+
+    name = fields.Char(default=lambda self: _('New'),required=True,
+                          readonly=True)
 
     branch_id = fields.Many2one('crm.team', string="Branch")
     # premium_paid_amounts = fields.Float(string="Premium paid. Amounts", required=True, tracking=True)
@@ -75,11 +77,20 @@ class CommisionPayables(models.Model):
     status = fields.Selection([('draft', 'Draft'), ('post', 'Post')], default="draft", string='Status', tracking=True)
     commission_payable_line = fields.One2many('commission.payable.line','commission_payable_id')
 
+
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', _('New')) == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'commission.payable') or _('New')
+        res = super(CommisionPayables, self).create(vals)
+        return res
+
     def action_filters(self):
         # domain = [('task_type', '=', 'offerings')]
 
         domain = [('task_type', '=', 'premium_schedules'), ('parent_id', '!=', False)]
-        print(domain)
         if self.branch_id:
             domain.append(('branch_id', '=', self.branch_id.id))
         if self.date_from:
